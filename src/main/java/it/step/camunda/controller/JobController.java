@@ -70,4 +70,16 @@ public class JobController {
         log.info("Exiting from activeErrorTest() method");
     }
 
+    @Operation(summary = "Start Message Test Process",
+            description = "Process that start from a message event")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
+    @GetMapping(value = "/message-test")
+    public void activeMessageTest(@RequestParam String msg) {
+        log.info("Entering in activeMessageTest() method");
+        zeebe.startWithMessage(AppConstants.MESSAGE_NAME_01, null, Map.of("msg", msg));
+        log.info("Exiting from activeMessageTest() method");
+    }
+
 }

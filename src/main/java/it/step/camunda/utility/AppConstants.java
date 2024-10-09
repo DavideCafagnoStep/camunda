@@ -13,4 +13,8 @@ public class AppConstants {
 
     // ERROR CODE
     public static String TEST_ERROR_CODE_01 = "err_01";
+
+    // MESSAGE EVENT NAMES & CORRELATION KEYS
+    public static final String MESSAGE_NAME_01 = "Message_01";
+    //public static final String MSG_01_KEY = "msg_01";
 }
