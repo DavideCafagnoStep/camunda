@@ -10,12 +10,12 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import it.step.camunda.utility.AppConstants;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -44,4 +44,27 @@ public class JobController {
                 .join();
         log.info("Exiting from activeGatewayTest() method");
     }
+
+
+    @Operation(summary = "Start test Process",
+            description = "process thath return en possibly an Exception ")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
+    @GetMapping(value = "/error")
+    public void activeErrorTest(@RequestParam( defaultValue = "true") Boolean error, @RequestParam( defaultValue = "false") Boolean data) {
+        log.info("Entering in activeErrorTest() method");
+        Map<String, Object> variables = new HashMap<>();
+        variables.put(AppConstants.PAYLOAD_KEY,data);
+        variables.put(AppConstants.ERROR_KEY,error);
+
+        zeebe.newCreateInstanceCommand()
+                .bpmnProcessId(AppConstants.ERROR_PROCESS_ID)
+                .latestVersion()
+                .variables(variables)
+                .send()
+                .join();
+        log.info("Exiting from activeErrorTest() method");
+    }
+
 }
