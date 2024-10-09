@@ -37,7 +37,7 @@ public class JobController {
     @GetMapping(value = "/basilar-test")
     public void activeBasilarTest() {
         log.info("Entering in activeBasilarTest() method");
-        zeebe.startProcess(AppConstants.TEST_GATEWAY_PROCESS_ID, new LinkedHashMap<String,Object>());
+        zeebe.startProcess(AppConstants.BASILAR_FLOW_PROCESS_ID, new LinkedHashMap<String,Object>());
         log.info("Exiting from activeBasilarTest() method");
     }
 
