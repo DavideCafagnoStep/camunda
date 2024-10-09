@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import it.step.camunda.service.ZeebeService;
 import it.step.camunda.utility.AppConstants;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,23 +26,18 @@ import java.util.Map;
 @Tag(name = "Job Controller", description = "Controller for starting jobs")
 public class JobController {
 
-    private final ZeebeClient zeebe;
+    private final ZeebeService zeebe;
 
 
     @Operation(summary = "Start Test Process",
-            description = "Process that return the opposite boolean payload value")
+            description = "Process that reverse the payload value")
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(), mediaType = "application/json")}),
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
     @GetMapping(value = "/gateway-test")
     public void activeGatewayTest(@RequestParam( defaultValue = "false") Boolean payload) {
         log.info("Entering in activeGatewayTest() method");
-        zeebe.newCreateInstanceCommand()
-                .bpmnProcessId(AppConstants.TEST_GATEWAY_PROCESS_ID)
-                .latestVersion()
-                .variables(Map.of(AppConstants.PAYLOAD_KEY, payload))
-                .send()
-                .join();
+        zeebe.startProcess(AppConstants.TEST_GATEWAY_PROCESS_ID,Map.of(AppConstants.PAYLOAD_KEY, payload));
         log.info("Exiting from activeGatewayTest() method");
     }
 
@@ -57,13 +53,7 @@ public class JobController {
         Map<String, Object> variables = new HashMap<>();
         variables.put(AppConstants.PAYLOAD_KEY,payload);
         variables.put(AppConstants.ERROR_KEY,error);
-
-        zeebe.newCreateInstanceCommand()
-                .bpmnProcessId(AppConstants.ERROR_PROCESS_ID)
-                .latestVersion()
-                .variables(variables)
-                .send()
-                .join();
+        zeebe.startProcess(AppConstants.ERROR_PROCESS_ID,variables);
         log.info("Exiting from activeErrorTest() method");
     }
 
