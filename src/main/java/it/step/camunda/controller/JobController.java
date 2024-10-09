@@ -28,6 +28,18 @@ public class JobController {
 
     private final ZeebeService zeebe;
 
+    @Operation(summary = "Start Test Process",
+            description = "Process that only log the event")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(), mediaType = "application/json")}),
+            @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
+    @GetMapping(value = "/basilar-test")
+    public void activeBasilarTest() {
+        log.info("Entering in activeBasilarTest() method");
+        zeebe.startProcess(AppConstants.TEST_GATEWAY_PROCESS_ID,null);
+        log.info("Exiting from activeBasilarTest() method");
+    }
+
 
     @Operation(summary = "Start Test Process",
             description = "Process that reverse the payload value")

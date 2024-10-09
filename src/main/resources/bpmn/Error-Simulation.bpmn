@@ -11,7 +11,7 @@
     <bpmn:sequenceFlow id="Flow_0bn7205" sourceRef="Activity_0zn5dj4" targetRef="Gateway_0toxe1b" />
     <bpmn:serviceTask id="Activity_0zn5dj4" name="Test Service">
       <bpmn:extensionElements>
-        <zeebe:taskDefinition type="test-demonstration-error" />
+        <zeebe:taskDefinition type="handle-error-test" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0yw8khu</bpmn:incoming>
       <bpmn:outgoing>Flow_0bn7205</bpmn:outgoing>
@@ -69,16 +69,16 @@
         <di:waypoint x="215" y="117" />
         <di:waypoint x="360" y="117" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0bn7205_di" bpmnElement="Flow_0bn7205">
-        <di:waypoint x="460" y="117" />
-        <di:waypoint x="585" y="117" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0wz1t2s_di" bpmnElement="Flow_0wz1t2s">
         <di:waypoint x="635" y="117" />
         <di:waypoint x="782" y="117" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="699" y="99" width="22" height="14" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0bn7205_di" bpmnElement="Flow_0bn7205">
+        <di:waypoint x="460" y="117" />
+        <di:waypoint x="585" y="117" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0670khk_di" bpmnElement="Flow_0670khk">
         <di:waypoint x="610" y="142" />

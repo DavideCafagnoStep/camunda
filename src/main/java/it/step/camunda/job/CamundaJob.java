@@ -20,19 +20,27 @@ public class CamundaJob {
     private final ZeebeClient zeebeClient;
 
 
-    @JobWorker(type = "test-demonstration")
-    public Map<String, Object> testDemonstration(ActivatedJob job, @VariablesAsType Map<String, Object> variables) {
-        log.info("Entering in testDemonstration() variables : {}", variables);
-        System.out.println(job.getVariablesAsMap());
-        Boolean payload = (Boolean) variables.get(AppConstants.PAYLOAD_KEY);
-        variables.put(AppConstants.PAYLOAD_KEY, !payload);
-        log.info("Exiting from testDemonstration() variables : {}", variables);
+
+    @JobWorker(type = "basilar-test")
+    public Map<String, Object> basilarTest(@VariablesAsType Map<String, Object> variables) {
+        log.info("Entering in basilarTest() variables : {}", variables);
+        log.info("Exiting from basilarTest()");
         return variables;
     }
 
-    @JobWorker(type = "test-demonstration-error")
-    public Map<String, Object> testDemonstrationError(ActivatedJob job, @VariablesAsType Map<String, Object> variables) {
-        log.info("Entering in testDemonstrationError() variables : {}", variables);
+    @JobWorker(type = "gateway-test")
+    public Map<String, Object> gatewayTest(ActivatedJob job, @VariablesAsType Map<String, Object> variables) {
+        log.info("Entering in gatewayTest() variables : {}", variables);
+        System.out.println(job.getVariablesAsMap());
+        Boolean payload = (Boolean) variables.get(AppConstants.PAYLOAD_KEY);
+        variables.put(AppConstants.PAYLOAD_KEY, !payload);
+        log.info("Exiting from gatewayTest() variables : {}", variables);
+        return variables;
+    }
+
+    @JobWorker(type = "handle-error-test")
+    public Map<String, Object> handleErrorTest(ActivatedJob job, @VariablesAsType Map<String, Object> variables) {
+        log.info("Entering in handleErrorTest() variables : {}", variables);
         System.out.println(job.getVariablesAsMap());
         Boolean payload = (Boolean) variables.get(AppConstants.PAYLOAD_KEY);
         variables.put(AppConstants.PAYLOAD_KEY, !payload);
@@ -40,7 +48,7 @@ public class CamundaJob {
         if (error) {
             throw new ZeebeBpmnError(AppConstants.TEST_ERROR_CODE_01, "Error!", variables);
         }
-        log.info("Exiting from testDemonstrationError() variables : {}", variables);
+        log.info("Exiting from handleErrorTest() variables : {}", variables);
         return variables;
     }
 }

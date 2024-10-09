@@ -11,7 +11,7 @@
     <bpmn:sequenceFlow id="Flow_0bn7205" sourceRef="Activity_0zn5dj4" targetRef="Gateway_0toxe1b" />
     <bpmn:serviceTask id="Activity_0zn5dj4" name="Test Service">
       <bpmn:extensionElements>
-        <zeebe:taskDefinition type="test-demonstration" />
+        <zeebe:taskDefinition type="gateway-test" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0yw8khu</bpmn:incoming>
       <bpmn:outgoing>Flow_0bn7205</bpmn:outgoing>
