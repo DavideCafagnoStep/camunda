@@ -2,7 +2,6 @@ package it.step.camunda.job;
 
 import io.camunda.zeebe.client.ZeebeClient;
 import io.camunda.zeebe.client.api.response.ActivatedJob;
-import io.camunda.zeebe.model.bpmn.BpmnModelException;
 import io.camunda.zeebe.spring.client.annotation.JobWorker;
 import io.camunda.zeebe.spring.client.annotation.VariablesAsType;
 import io.camunda.zeebe.spring.client.exception.ZeebeBpmnError;
@@ -21,27 +20,27 @@ public class CamundaJob {
     private final ZeebeClient zeebeClient;
 
 
-    @JobWorker(type = "test-demostration")
-    public Map<String, Object> testDemostration(ActivatedJob job, @VariablesAsType Map<String, Object> variables) {
-        log.info("Entering in testDemostration() variables : {}", variables);
+    @JobWorker(type = "test-demonstration")
+    public Map<String, Object> testDemonstration(ActivatedJob job, @VariablesAsType Map<String, Object> variables) {
+        log.info("Entering in testDemonstration() variables : {}", variables);
         System.out.println(job.getVariablesAsMap());
-        Boolean result = (Boolean) variables.get(AppConstants.PAYLOAD_KEY);
-        variables.put(AppConstants.PAYLOAD_KEY, !result);
-        log.info("Exiting from testDemostration() variables : {}", variables);
+        Boolean payload = (Boolean) variables.get(AppConstants.PAYLOAD_KEY);
+        variables.put(AppConstants.PAYLOAD_KEY, !payload);
+        log.info("Exiting from testDemonstration() variables : {}", variables);
         return variables;
     }
 
-    @JobWorker(type = "test-demostration-error")
-    public Map<String, Object> testDemostrationError(ActivatedJob job, @VariablesAsType Map<String, Object> variables) {
-        log.info("Entering in testDemostrationError() variables : {}", variables);
+    @JobWorker(type = "test-demonstration-error")
+    public Map<String, Object> testDemonstrationError(ActivatedJob job, @VariablesAsType Map<String, Object> variables) {
+        log.info("Entering in testDemonstrationError() variables : {}", variables);
         System.out.println(job.getVariablesAsMap());
-        Boolean result = (Boolean) variables.get(AppConstants.PAYLOAD_KEY);
-        variables.put(AppConstants.PAYLOAD_KEY, !result);
+        Boolean payload = (Boolean) variables.get(AppConstants.PAYLOAD_KEY);
+        variables.put(AppConstants.PAYLOAD_KEY, !payload);
         Boolean error = (Boolean) variables.get(AppConstants.ERROR_KEY);
         if (error) {
-            throw new ZeebeBpmnError(AppConstants.TEST_ERROR_CODE, "Error Occour", variables);
+            throw new ZeebeBpmnError(AppConstants.TEST_ERROR_CODE_01, "Error!", variables);
         }
-        log.info("Exiting from testDemostrationError() variables : {}", variables);
+        log.info("Exiting from testDemonstrationError() variables : {}", variables);
         return variables;
     }
 }

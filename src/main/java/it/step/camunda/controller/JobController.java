@@ -28,34 +28,34 @@ public class JobController {
     private final ZeebeClient zeebe;
 
 
-    @Operation(summary = "Start test Process",
-            description = "process thath return true or false")
+    @Operation(summary = "Start Test Process",
+            description = "Process that return the opposite boolean payload value")
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(), mediaType = "application/json")}),
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
     @GetMapping(value = "/gateway-test")
-    public void activeGatewayTest(@RequestParam( defaultValue = "false") Boolean data) {
+    public void activeGatewayTest(@RequestParam( defaultValue = "false") Boolean payload) {
         log.info("Entering in activeGatewayTest() method");
         zeebe.newCreateInstanceCommand()
                 .bpmnProcessId(AppConstants.TEST_GATEWAY_PROCESS_ID)
                 .latestVersion()
-                .variables(Map.of(AppConstants.PAYLOAD_KEY, data))
+                .variables(Map.of(AppConstants.PAYLOAD_KEY, payload))
                 .send()
                 .join();
         log.info("Exiting from activeGatewayTest() method");
     }
 
 
-    @Operation(summary = "Start test Process",
-            description = "process thath return en possibly an Exception ")
+    @Operation(summary = "Start Error test Process",
+            description = "Process that throw an Exception depending on error variable")
     @ApiResponses({
             @ApiResponse(responseCode = "200", content = {@Content(schema = @Schema(), mediaType = "application/json")}),
             @ApiResponse(responseCode = "500", content = {@Content(schema = @Schema())})})
     @GetMapping(value = "/error")
-    public void activeErrorTest(@RequestParam( defaultValue = "true") Boolean error, @RequestParam( defaultValue = "false") Boolean data) {
+    public void activeErrorTest(@RequestParam( defaultValue = "true") Boolean error, @RequestParam( defaultValue = "false") Boolean payload) {
         log.info("Entering in activeErrorTest() method");
         Map<String, Object> variables = new HashMap<>();
-        variables.put(AppConstants.PAYLOAD_KEY,data);
+        variables.put(AppConstants.PAYLOAD_KEY,payload);
         variables.put(AppConstants.ERROR_KEY,error);
 
         zeebe.newCreateInstanceCommand()

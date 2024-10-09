@@ -12,5 +12,5 @@ public class AppConstants {
     public static String ERROR_KEY = "exception-test";
 
     // ERROR CODE
-    public static String TEST_ERROR_CODE = "err_01";
+    public static String TEST_ERROR_CODE_01 = "err_01";
 }
