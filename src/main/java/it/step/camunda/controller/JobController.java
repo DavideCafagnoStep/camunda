@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 @RestController
@@ -36,7 +37,7 @@ public class JobController {
     @GetMapping(value = "/basilar-test")
     public void activeBasilarTest() {
         log.info("Entering in activeBasilarTest() method");
-        zeebe.startProcess(AppConstants.TEST_GATEWAY_PROCESS_ID,null);
+        zeebe.startProcess(AppConstants.TEST_GATEWAY_PROCESS_ID, new LinkedHashMap<String,Object>());
         log.info("Exiting from activeBasilarTest() method");
     }
 
