@@ -1,7 +1,6 @@
 package it.step.camunda.service.impl;
 
 import io.camunda.zeebe.client.ZeebeClient;
-import io.camunda.zeebe.client.api.command.PublishMessageCommandStep1;
 import it.step.camunda.service.ZeebeService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
